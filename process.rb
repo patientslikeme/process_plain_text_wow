@@ -13,6 +13,15 @@ def replace_img_emoticons(doc)
   end
 end
 
+def replace_tinymce_img_emoticons(doc)
+  url = 'http://www.patientslikeme.com/javascripts/tiny_mce_3/plugins/emotions/img/'
+  doc.xpath("//img[starts-with(@src, \"#{url}\")]").each do |img|
+    span = doc.create_element "span"
+    span.inner_html = to_emoticon_text img['alt']
+    img.replace span
+  end
+end
+
 def replace_span_emoticons(doc)
   doc.css('span.emoticon').each do |span|
     span.inner_html = to_emoticon_text span.inner_html
@@ -22,6 +31,7 @@ end
 def replace_emoticons(doc)
   replace_img_emoticons(doc)
   replace_span_emoticons(doc)
+  replace_tinymce_img_emoticons(doc)
   doc
 end
 
