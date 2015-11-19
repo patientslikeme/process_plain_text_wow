@@ -60,13 +60,13 @@ die('You must specify an input and output file') if input_filename.nil? || outpu
 die("The input file \"#{input_filename}\" does not exist") unless File.exists?(input_filename)
 
 headers = File.open(input_filename, &:readline).split(',').map(&:chomp)
-count = CSV.read(input_filename, headers: true).length
-progress = ProgressBar.new(count)
+input = CSV.read(input_filename, headers: true)
+progress = ProgressBar.new(input.count)
 
 File.open(output_filename, 'w') do |file|
-  CSV.new(file, write_headers: true, headers: headers).tap do |csv|
-    CSV.read(input_filename, headers: true).map do |row|
-      csv << row.to_a.map do |field|
+  CSV.new(file, write_headers: true, headers: headers).tap do |output|
+    input.map do |row|
+      output << row.to_a.map do |field|
         field[0] == 'content' ? process_content(field[1])  : field[1]
       end
       progress.increment!
