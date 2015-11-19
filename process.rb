@@ -1,7 +1,7 @@
 require 'csv'
 require 'nokogiri'
-require './emo'
 require 'progress_bar'
+require_relative 'emo'
 
 def to_emoticon_text(string)
   "[[[#{string.gsub(/\b\s*emoticon\s*\b/, '')}]]]"
