@@ -1,3 +1,4 @@
+require 'json'
 require_relative 'scanner'
 
 class EmoCounter < Scanner
@@ -9,7 +10,7 @@ class EmoCounter < Scanner
         output_hash[emo] += 1
       end
     end
-    write_output output_hash.sort_by{|k,v|v}.reverse.map{ |emo, count| "#{emo}: #{count}" }
+    write_output output_hash.sort_by{|k,v|v}.reverse.to_json
   end
 
 end
