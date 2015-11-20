@@ -4,7 +4,7 @@ require 'progress_bar'
 require_relative 'emo'
 
 def to_emoticon_text(string)
-  "[[[#{string.gsub(/\b\s*emoticon\s*\b/, '')}]]]"
+  "[[[#{string.gsub(/\b\s*emoticon\s*\b/, '').gsub(/\s+/, '_')}]]]"
 end
 
 def replace_img_emoticons(doc)
@@ -25,7 +25,7 @@ end
 
 def replace_span_emoticons(doc)
   doc.css('span.emoticon').each do |span|
-    span.inner_html = to_emoticon_text("span:" + span.inner_html)
+    span.inner_html = to_emoticon_text("span:" + span['class'].split('-').last)
   end
 end
 
