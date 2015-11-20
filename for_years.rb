@@ -7,7 +7,7 @@ class ForYears < Scanner
 
     output_hash = {}
 
-    units = %w(seconds minutes hours days weeks months years decades)
+    units = %w(seconds? minutes? hours? days? weeks? months? years? decades?)
     maybe_words = ['for about', 'for over', 'more than', 'for the past',
       'for going on', 'for almost', 'now', 'for', 'about', 'almost', 'over',
       'the', 'going', 'this', 'nearly']
@@ -25,7 +25,7 @@ class ForYears < Scanner
 
     output = output_hash.map do |thing, unit|
       unit = unit.map do |unit, numbers|
-        numbers = numbers.sort_by{|k,v| v}.reverse.to_h
+        numbers = numbers.sort_by{|k,v| k.to_i}.to_h
         [unit, numbers]
       end
       unit = unit.to_h
